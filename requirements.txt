@@ -1,0 +1,16 @@
+pandas==2.2.2
+numpy
+scikit-learn
+matplotlib
+PyYAML
+lightfm
+rectools[all]
+tqdm
+sentence-transformers
+faiss-cpu
+pyarrow==16.1.0
+threadpoolctl
+pandarallel
+lightgbm
+streamlit
+pillow

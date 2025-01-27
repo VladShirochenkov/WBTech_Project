@@ -1,0 +1,114 @@
+data:
+  raw_path: 'data/raw/cut_clickstream_2.parquet'
+  processed_dir: 'data/processed/'
+
+logging:
+  log_file: 'logs/project.log'
+  log_level: 'INFO'
+
+split:
+  random_seed: 42
+  fraction: 0.1
+  split_frac: 0.5
+
+processing:
+  train_input: 'data/processed/first_train_2.parquet'
+  val_input: 'data/processed/first_val_2.parquet'
+  warm_test_input: 'data/processed/warm_test_2.parquet'
+  cold_test_input: 'data/processed/cold_test_2.parquet'
+  train_output: 'data/processed/first_train_2.parquet'
+  val_output: 'data/processed/first_val_2.parquet'
+  warm_test_output: 'data/processed/warm_test_2.parquet'
+  cold_test_output: 'data/processed/cold_test_2.parquet'
+
+text:
+  input_file: 'data/raw/text_data.parquet'
+  output_file: 'data/processed/text_wo_desc.parquet'
+
+embedding:
+  model_name: 'intfloat/multilingual-e5-small'  
+  output_file: 'items_full.parquet'  
+
+models:
+  itemknn_bm25:
+    K: 50
+    K1: 0.8
+    B: 0.3
+  itemknn_tfidf:
+    K: 50
+  als:
+    factors: 300
+    regularization: 0.01
+    alpha: 150
+    iterations: 9
+    random_state: 0
+    use_gpu: False
+  lgbm_ranker:
+    learning_rate: 0.0999216727810641
+    n_estimators: 1256
+    max_depth: 4
+    num_leaves: 17
+    min_child_samples: 114
+    reg_lambda: 5.198045171235755
+    colsample_bytree: 0.7270261311314077
+    subsample: 0.9206826801502651
+    objective: 'lambdarank'
+    metric: 'map'
+    verbosity: -1
+    random_state: 0
+    early_stopping_rounds: 16
+
+recommendations:
+  val:
+    ial_recommendations: 'data/processed/ials_recommendations_df_50_val.parquet'
+    bm25_recommendations: 'data/processed/bm_25_recommendations_df_50_val.parquet'
+    tfidf_recommendations: 'data/processed/tfidf_recommendations_df_50_val.parquet'
+    text_recommendations: 'data/processed/text_recommendations_val.parquet'
+    weight_input: 'data/processed/first_val_2.parquet'
+    output: 'data/processed/recommendations_val.parquet'
+  
+  test:
+    ial_recommendations: 'data/processed/ials_recommendations_df_50_test.parquet'
+    bm25_recommendations: 'data/processed/bm_25_recommendations_df_50_test.parquet'
+    tfidf_recommendations: 'data/processed/tfidf_recommendations_df_50_test.parquet'
+    text_recommendations: 'data/processed/text_recommendations_test.parquet'
+    weight_input: 'data/processed/warm_test_2.parquet'
+    output: 'data/processed/recommendations_test.parquet'
+
+items:
+  file: 'data/processed/items_full.parquet'
+
+inner_product:
+  first_train_path: 'data/processed/first_train_2.parquet'
+  recommendations_val_path: 'data/processed/recommendations_val.parquet'
+  recommendations_test_path: 'data/processed/recommendations_test.parquet'
+  output_val_path: 'data/processed/recommendations_val.parquet'
+  output_test_path: 'data/processed/recommendations_test.parquet'
+  output_users_path: 'data/processed/users_emb_full.parquet'
+  model_parameters:
+    factors: 300
+    regularization: 0.01
+    alpha: 150
+    iterations: 9
+    random_state: 0
+    use_gpu: False
+
+data_recos_stats:
+  input:
+    items_full: 'data/processed/items_full.parquet'
+    first_train: 'data/processed/first_train_2.parquet'
+    recommendations:
+      val: 'data/processed/recommendations_val.parquet'
+      test: 'data/processed/recommendations_test.parquet'
+
+cluster:
+  n_clusters_users: 24
+  random_state: 42
+  n_init: 10
+  data_path: 'data/processed/'
+  users_emb_file: 'users_emb_full.parquet'
+  first_train_file: 'first_train_2.parquet'
+  recommendations:
+    val_file: 'recommendations_val.parquet'
+    test_file: 'recommendations_test.parquet'
+
