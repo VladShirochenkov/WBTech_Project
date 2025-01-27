@@ -20,6 +20,7 @@ processing:
   val_output: 'data/processed/first_val_2.parquet'
   warm_test_output: 'data/processed/warm_test_2.parquet'
   cold_test_output: 'data/processed/cold_test_2.parquet'
+  cold_recos_output: 'data/processed/cold_recos.parquet'
 
 text:
   input_file: 'data/raw/text_data.parquet'
