@@ -9,6 +9,7 @@ from src.inner_product import InnerProduct
 from src.compute_recommendation_stats import RecommendationStats
 from src.recommendation_cluster import RecommendationCluster
 from src.lgbm_train import LGBMTrain
+from cold_recos import ColdRecos
 from src.logger import setup_logger
 
 def main():
@@ -68,6 +69,11 @@ def main():
         lgbm_trainer = LGBMTrain()
 
         lgbm_trainer.train()
+
+
+        cold_recos = ColdRecos()
+
+        cold_recos.run()
 
         logger.info("WBTech_Project успешно завершен")
     except Exception as e:
