@@ -9,7 +9,7 @@ from src.inner_product import InnerProduct
 from src.compute_recommendation_stats import RecommendationStats
 from src.recommendation_cluster import RecommendationCluster
 from src.lgbm_train import LGBMTrain
-from cold_recos import ColdRecos
+from src.cold_recos import ColdRecos
 from src.logger import setup_logger
 
 def main():
