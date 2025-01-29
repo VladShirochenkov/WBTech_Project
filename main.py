@@ -15,70 +15,66 @@ from src.logger import setup_logger
 def main():
     logger = setup_logger()
     logger.info("Запуск WBTech_Project")
-    try:
 
-        # Разделение данных
-        splitter = DataSplitter()
-        splitter.split_data()
+    # Разделение данных
+    splitter = DataSplitter()
+    splitter.split_data()
         
-        # Обработка данных
-        processor = DataProcessor()
-        processor.process_data()
+    # Обработка данных
+    processor = DataProcessor()
+    processor.process_data()
         
-        # Обработка текстовых данных
-        text_processor = TextProcessor()
-        text_processor.process()
+    # Обработка текстовых данных
+    text_processor = TextProcessor()
+    text_processor.process()
         
-        # Генерация и обработка признаков айтемов
-        items_features = ItemsFeatures()
-        items_features.process()
+    # Генерация и обработка признаков айтемов
+    items_features = ItemsFeatures()
+    items_features.process()
         
-        recommender = RecommendationsText()
-        recommender.recos()
+    recommender = RecommendationsText()
+    recommender.recos()
 
-        trainer = ModelsTraining()
-        trainer.train_and_predict()
+    trainer = ModelsTraining()
+    trainer.train_and_predict()
 
-        # Обработка рекомендаций для валидации
-        recommendation_processor = RecommendationProcessor()
-        recommendation_processor.process_recommendations(train_val='val')
+    # Обработка рекомендаций для валидации
+    recommendation_processor = RecommendationProcessor()
+    recommendation_processor.process_recommendations(train_val='val')
         
-        # Обработка рекомендаций для тестирования
-        recommendation_processor.process_recommendations(train_val='test')
+    # Обработка рекомендаций для тестирования
+    recommendation_processor.process_recommendations(train_val='test')
 
-        inner_product = InnerProduct()
-        inner_product.compute_inner_products()
+    inner_product = InnerProduct()
+    inner_product.compute_inner_products()
 
-        # Инициализация класса RecommendationStats
-        recommendation_stats = RecommendationStats()
+    # Инициализация класса RecommendationStats
+    recommendation_stats = RecommendationStats()
     
-        # Обработка val датасета
-        recommendation_stats.compute_stats(dataset='val')
+    # Обработка val датасета
+    recommendation_stats.compute_stats(dataset='val')
     
-        # Обработка test датасета
-        recommendation_stats.compute_stats(dataset='test')
+    # Обработка test датасета
+    recommendation_stats.compute_stats(dataset='test')
         
         
-        recommendation_cluster = RecommendationCluster()
+    recommendation_cluster = RecommendationCluster()
 
-        recommendation_cluster.compute_stats(dataset='val')
+    recommendation_cluster.compute_stats(dataset='val')
 
-        recommendation_cluster.compute_stats(dataset='test')
-
-
-        lgbm_trainer = LGBMTrain()
-
-        lgbm_trainer.train()
+    recommendation_cluster.compute_stats(dataset='test')
 
 
-        cold_recos = ColdRecos()
+    lgbm_trainer = LGBMTrain()
 
-        cold_recos.run()
+    lgbm_trainer.train()
 
-        logger.info("WBTech_Project успешно завершен")
-    except Exception as e:
-        logger.error(f"Произошла ошибка во время выполнения проекта: {e}")
-        raise
+
+    cold_recos = ColdRecos()
+
+    cold_recos.run()
+
+    logger.info("WBTech_Project успешно завершен")
 
 if __name__ == "__main__":
     main()
